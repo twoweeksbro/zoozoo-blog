@@ -1,0 +1,12 @@
+{
+  "hash": "954e8ba029487ee77ccbd844cb077e1d",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"zoozoo-blog\"\nlisting:\n  contents: posts\n  sort: \"date desc\"\n  type: default\n  categories: true\n  sort-ui: false\n  filter-ui: false\npage-layout: full\ntitle-block-banner: true\n---\n\n::: {#963005e9 .cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\na = np.arange(1,11)\nprint(a)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[ 1  2  3  4  5  6  7  8  9 10]\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
