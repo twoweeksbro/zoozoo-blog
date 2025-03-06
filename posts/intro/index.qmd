@@ -1,9 +1,0 @@
----
-title: "소개글"
-author: "juhyung"
-date: "2025-03-05"
-categories: [introduction]
-image: https://commons.wikimedia.org/wiki/File:Goog
----
-
-나의 첫 블로그 ~
