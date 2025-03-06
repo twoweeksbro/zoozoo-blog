@@ -1,9 +1,132 @@
 ---
-title: "Post With Code"
-author: "Harlow Malloc"
-date: "2025-03-06"
+title: "Palmer Penguins Analysis"
+author: "zoozoo"
+date: "2025-03-07"
 categories: [news, code, analysis]
-image: "image.jpg"
+image: "lter_penguins.png"
 ---
 
-This is a post with executable code.
+
+
+## 8조 (이주형, 이창혁, 정은주 )
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
+
+### 팔마 펭귄 데이터 불러오기 & 데이터 확인
+```{python}
+import numpy as np 
+import pandas as pd 
+from palmerpenguins import load_penguins
+penguins = load_penguins()
+# 전체 데이터 확인
+penguins.info()
+# penguins 데이터 columns 이름
+```
+<br>
+
+### 필요 없는 column 제거
+```{python}
+print(penguins['year'].unique())
+print('-'*50,'\n')
+del penguins['year']
+print(penguins.head())
+```
+* year 컬럼이 2007~2009 범위로 분포에 있어 분석에 도움되지 않는 column이라 생각
+<br>
+
+### 종 별 수치 정보
+```{python}
+ade_desc = penguins.loc[penguins['species'] == 'Adelie'].describe()
+gen_desc = penguins.loc[penguins['species'] == 'Gentoo'].describe()
+chin_desc = penguins.loc[penguins['species'] == 'Chinstrap'].describe()
+
+ade_mean = ade_desc.loc['mean']
+gen_mean = gen_desc.loc['mean']
+chin_mean = chin_desc.loc['mean']
+
+peng_mean = pd.concat([ade_mean, gen_mean, chin_mean], axis=1)
+peng_mean.columns= ['Adelie', 'Gentoo', 'Chinstrap']
+peng_mean
+
+```
+- 알 수 있는 점
+    - Adelie
+        - Adelie 종은 bill_length_mm의 평균이 38.79로 가장 짧은 편이다. 
+    - Gentoo
+        - Gentoo 종은 body_mass_g의 평균이 5076.01로 가장 무겁다.
+        - flipper_length_mm의 길이의 평균이 217.18로 가장 길다. 
+    - Chinstrap
+        - 수치 데이터로 뚜렷한 특징을 찾을 수 없다. 
+        - 굳이 꼽자면 데이터수가 가장 적다. 희귀한가????
+            - 두 가지 가능성 : 
+                - dream 섬에서 조사를 많이 하지 않았다. 
+                - chinstrap 종의 펭귄의 개체 수가 적다. 
+<br>
+
+### 성별 파악
+```{python}
+adelie_sex = penguins.loc[penguins['species'] == 'Adelie', 'sex'].value_counts()
+gentoo_sex = penguins.loc[penguins['species'] == 'Gentoo', 'sex'].value_counts()
+chinstrap_sex = penguins.loc[penguins['species'] == 'Chinstrap', 'sex'].value_counts()
+
+total_sex = pd.concat([adelie_sex,gentoo_sex,chinstrap_sex],axis=1)
+total_sex.columns= ['adelie','gentoo','chinstrap']
+total_sex
+```
+<br>
+
+### 서식지 파악
+```{python}
+adelie_island = penguins.loc[penguins['species'] == 'Adelie', 'island'].value_counts()
+# Adelie 종은 Dream, Torgersen, Biscoe 섬에 고루 서식한다.
+
+gentoo_island = penguins.loc[penguins['species'] == 'Gentoo', 'island'].value_counts()
+# Gentoo 종은 Biscoe 섬에만 서식한다.
+
+chinstrap_island = penguins.loc[penguins['species'] == 'Chinstrap', 'island'].value_counts()
+# Chinstrap 종은 Dream  섬에만 서식한다.
+
+total_island = pd.concat([adelie_island,gentoo_island,chinstrap_island],axis=1)
+total_island.columns= ['adelie','gentoo','chinstrap']
+total_island = total_island.fillna(0)
+total_island
+```
+- adelie 한 종만 3곳의의 island에 서식하고 있음 
+
+<br>
+
+### adelie 종에 대한 서식지 별 수치 정보 
+```{python}
+ade_desc =penguins.loc[(penguins['species'] == 'Adelie') & (penguins['island']=='Dream')].describe()
+
+gen_desc =penguins.loc[(penguins['species'] == 'Adelie') & (penguins['island']=='Torgersen')].describe()
+
+chin_desc = penguins.loc[(penguins['species'] == 'Adelie') & (penguins['island']=='Biscoe')].describe()
+
+ade_mean = ade_desc.loc['mean']
+gen_mean = gen_desc.loc['mean']
+chin_mean = chin_desc.loc['mean']
+
+peng_mean = pd.concat([ade_mean, gen_mean, chin_mean], axis=1)
+peng_mean.columns= ['Dream', 'Torgersen', 'Biscoe']
+peng_mean
+```
+- 서식지 별로 큰 차이는 보이지 않음
+<br>
+
+### 요약
+- adelie
+    - Adelie 종의 bill_length_mm가 가장 짧은 편이다. 
+    - Adelie 종은 Dream, Torgersen, Biscoe 섬에 고루 서식한다.
+
+- Gentoo
+
+    - Gentoo 종의 body_mass_g는 가장 무거운 편이다.
+    - Gentoo 종의 flipper_length_mm의 길이의 평균이 가장 길다. 
+    - Gentoo 종은 Biscoe 섬에만 서식한다.
+
+- Chinstrap
+    -  Chinstrap 종은 수치 데이터로 뚜렷한 특징을 찾을 수 없다. 
+    -  Chinstrap 종은 Dream  섬에만 서식한다.
+
+- 전체
+    - 종별 성별은 고르게 분포되어 있다.
