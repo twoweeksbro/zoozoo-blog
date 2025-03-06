@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "ZOOZOO BLOG"
 image: profile.jpg
 about:
   template: jolla
@@ -16,4 +16,4 @@ about:
 
 ---
 
-About this blog
+About this blog`

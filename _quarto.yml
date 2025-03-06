@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "zoozoo-blog"
@@ -13,9 +14,11 @@ website:
 format:
   html:
     theme:
-      - cosmo
+      - litera
       - brand
     css: styles.css
 
-
+execute:
+  warning: false
+  freeze: auto
 
