@@ -2,7 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/my-first-post/index.html",
       "/posts/post-with-code/index.html",
+      "/posts/TIL0307/index.html",
       "/posts/welcome/index.html"
     ]
   }
